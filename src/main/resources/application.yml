@@ -51,6 +51,15 @@ spring:
           filters:
             - StripPrefix=1
             - JwtAuthenticationFilter
+
+        - id: medical-examination
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/examine/**
+          filters:
+            - StripPrefix=1
+            - JwtAuthenticationFilter
+
 eureka:
   client:
     enabled: false

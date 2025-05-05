@@ -33,6 +33,14 @@ public class RouteConfig {
                         .filters(f -> f.stripPrefix(1)
                         .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config())))
                         .uri("http://localhost:8083"))
+                .route("examination-service", r -> r // Давхцахгүй ID
+                        .path("/api/examine/**")  // Gateway дээрх зам
+                        .filters(f -> f
+                                .stripPrefix(1)   // /api-г хасна
+                                //JWT филтерийг нэмнэ
+                                .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+                        )
+                        .uri("http://localhost:8084")) // Шинэ сервисийн хаяг (Port зөв эсэхийг шалгаарай)
                 // .route("authorization-service", r -> r
                 // .path("/api/authorization/**")
                 //         .filters(f -> f
@@ -40,5 +48,6 @@ public class RouteConfig {
                 //                 .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config())))
                 //         .uri("http://52.77.99.18:8082"))
                 .build();
+        
     }
 }
