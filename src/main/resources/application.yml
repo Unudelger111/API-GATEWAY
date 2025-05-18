@@ -58,8 +58,8 @@ spring:
             - Path=/api/examine/**
           filters:
             - StripPrefix=1
-            - JwtAuthenticationFilter
-
+          # 🔴 Remove or comment out this line for testing
+          # - JwtAuthenticationFilter
 eureka:
   client:
     enabled: false

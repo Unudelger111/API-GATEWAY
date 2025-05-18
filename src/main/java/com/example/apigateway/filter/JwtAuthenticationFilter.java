@@ -37,12 +37,20 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             String path = request.getURI().getPath();
             log.info("==== ШАЛГАЖ БУЙ ЗАМ: {} ====", path);
 
+                    // ✅ Bypass JWT for medical-examination service
+            if (path.startsWith("/examine/")) {
+                log.info("JWT шалгалтыг алгасаж байна: {}", path);
+                return chain.filter(exchange); // ✅ bypass
+            }
+
+
             if (path.endsWith("/auth/login") || 
                 path.endsWith("/auth/register")
                 ) {
                 log.info("Нэвтрэх/Бүртгүүлэх эсвэл хэрэглэгчийн дэлгэрэнгүй зам учир JWT шалгахгүй алгасаж байна: {}", path);
                 return chain.filter(exchange);
             }
+
 
             log.info("JWT шүүлтүүр эхэллээ...");
 
